@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="black" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" value="1">
+                           <button id="128GB" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span class="add-amount">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="case" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" value="1">
+                           <button id="slicone-case" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span class="add-amount">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="sub-total">1,278</span></h5>
+                        <h5>$0</h5>
+                        <h5>$<span id="total">1,278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      // plus button handler
+      let plusBtn = document.getElementsByClassName('fa-plus');
+      let arr1 = [1219],
+         arr2 = [59];
+      for (let i = 0; i < plusBtn.length; i++) {
+         plusBtn[i].addEventListener('click', function (event) {
+            let inputValue = document.getElementsByClassName('form-control'); 
+            +inputValue[i].value++;
+            let addAmount = document.getElementsByClassName('add-amount');
+            let subTotal = document.getElementById('sub-total');
+            let total = document.getElementById('total');
+            if (event.target.parentNode.id != '128GB') {
+               addAmount[i].innerText = 59 * (+inputValue[i].value);
+               arr2.push(+addAmount[i].innerText);
+            } else {
+               addAmount[i].innerText = 1219 * (+inputValue[i].value);
+               arr1.push(+addAmount[i].innerText);
+            }
+            subTotal.innerText = arr1[arr1.length-1] + arr2[arr2.length-1];
+            total.innerText = +subTotal.innerText;
+         });
+      }
+
+      // minus button handler
+      let minusBtn = document.getElementsByClassName('fa-minus');
+      let arr3 = arr1,
+         arr4 = arr2;
+      for (let i = 0; i < minusBtn.length; i++) {
+         minusBtn[i].addEventListener('click', function(){
+            let inputValue = document.getElementsByClassName('form-control'); 
+            +inputValue[i].value--;
+            let addAmount = document.getElementsByClassName('add-amount');
+            let subTotal = document.getElementById('sub-total');
+            let total = document.getElementById('total');
+            if (event.target.parentNode.id != 'black') {
+               addAmount[i].innerText -= 59 ;
+               arr4.push(+addAmount[i].innerText);
+            } else {
+               addAmount[i].innerText -= 1219;
+               arr3.push(+addAmount[i].innerText);
+            }
+            subTotal.innerText = arr3[arr3.length-1] + arr4[arr4.length-1];
+            total.innerText = +subTotal.innerText;
+         });
+      }
+
+      // remove button handler
+      let removeBtn = document.getElementsByClassName('remove-item');
+      for(let i = 0; i<removeBtn.length; i++){
+         removeBtn[i].addEventListener('click', function (){
+            let removeItem = document.getElementsByClassName('cart-item');
+            removeItem[i].children[0].remove();
+         })
+      }
+
+   </script>
+</body>
+
+</html>
